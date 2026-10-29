@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusCue | Event Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a class="brand" href="#" aria-label="CampusCue home">
+                <span class="brand-mark">C</span>
+                <span>campus<span class="brand-accent">cue</span></span>
+            </a>
+
+            <p class="nav-label">WORKSPACE</p>
+            <nav class="side-nav">
+                <button class="nav-item active" data-page="dashboard">
+                    <span>▦</span> Dashboard
+                </button>
+                <button class="nav-item" data-page="events">
+                    <span>▤</span> Explore events
+                </button>
+                <button class="nav-item" data-page="registrations">
+                    <span>▣</span> My registrations
+                </button>
+                <button class="nav-item" data-page="manage">
+                    <span>⚙</span> Manage events
+                </button>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="profile">
+                    <div class="avatar">S</div>
+                    <div>
+                        <strong>Student workspace</strong>
+                        <small>Campus member</small>
+                    </div>
+                </div>
+                <p class="sidebar-note">CA1 PROJECT · 2026</p>
+            </div>
+        </aside>
+
+        <main class="main-area">
+            <header class="topbar">
+                <div>
+                    <p class="breadcrumb">CAMPUS / <span id="breadcrumbPage">DASHBOARD</span></p>
+                    <h1 id="pageTitle">Your campus, in one place.</h1>
+                </div>
+                <div class="topbar-actions">
+                    <span class="status-pill"><span></span> Campus events</span>
+                    <button class="avatar top-avatar" title="Student profile">S</button>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <section class="page-view active" id="dashboardPage">
+                    <div class="welcome-panel">
+                        <div>
+                            <p class="eyebrow">YOUR CAMPUS LIFE, ORGANIZED</p>
+                            <h2>Find your next <span>big moment.</span></h2>
+                            <p>Discover what's happening, reserve your place and make the most of campus life.</p>
+                            <button class="button button-lime" data-go="events">Explore events <span>↗</span></button>
+                        </div>
+                        <div class="welcome-art" aria-hidden="true">
+                            <div class="orbit orbit-one"></div>
+                            <div class="orbit orbit-two"></div>
+                            <div class="art-ticket">
+                                <span>YOUR NEXT</span>
+                                <strong>MEMORY</strong>
+                                <span>STARTS HERE ✦</span>
+                            </div>
+                            <span class="spark spark-one">✳</span>
+                            <span class="spark spark-two">✦</span>
+                        </div>
+                    </div>
+
+                    <div class="section-head">
+                        <div>
+                            <p class="eyebrow">AT A GLANCE</p>
+                            <h2>Your activity</h2>
+                        </div>
+                        <span class="muted small">Updated in this browser</span>
+                    </div>
+
+                    <div class="stats-grid">
+                        <article class="stat-card">
+                            <div class="stat-top"><span>Listed events</span><span class="stat-icon purple">▦</span></div>
+                            <strong id="statEvents">0</strong>
+                            <small>Events to explore</small>
+                        </article>
+                        <article class="stat-card">
+                            <div class="stat-top"><span>My registrations</span><span class="stat-icon lime">✓</span></div>
+                            <strong id="statRegistrations">0</strong>
+                            <small>Places you've reserved</small>
+                        </article>
+                        <article class="stat-card">
+                            <div class="stat-top"><span>Seats remaining</span><span class="stat-icon orange">↗</span></div>
+                            <strong id="statSeats">0</strong>
+                            <small>Across listed events</small>
+                        </article>
+                    </div>
+
+                    <div class="section-head event-section-head">
+                        <div>
+                            <p class="eyebrow">PICK SOMETHING GOOD</p>
+                            <h2>Coming up on campus</h2>
+                        </div>
+                        <button class="text-button" data-go="events">View all events →</button>
+                    </div>
+                    <div class="event-grid" id="featuredEvents"></div>
+                </section>
+
+                <section class="page-view" id="eventsPage">
+                    <div class="page-intro">
+                        <p class="eyebrow">THE CAMPUS CALENDAR</p>
+                        <h2>Explore events</h2>
+                        <p>Browse the programme and find something worth showing up for.</p>
+                    </div>
+                    <div class="toolbar">
+                        <input id="searchInput" type="search" placeholder="Search by event, venue or keyword..." aria-label="Search events">
+                        <select id="categoryFilter" aria-label="Filter by category">
+                            <option value="All">All categories</option>
+                            <option value="Cultural">Cultural</option>
+                            <option value="Workshop">Workshop</option>
+                            <option value="Technical">Technical</option>
+                            <option value="Career">Career</option>
+                        </select>
+                        <select id="sortFilter" aria-label="Sort events">
+                            <option value="date">Date: earliest first</option>
+                            <option value="seats">Most seats available</option>
+                            <option value="name">Name: A–Z</option>
+                        </select>
+                    </div>
+                    <p class="results-line" id="resultsLine"></p>
+                    <div class="event-grid" id="allEvents"></div>
+                </section>
+
+                <section class="page-view" id="registrationsPage">
+                    <div class="page-intro">
+                        <p class="eyebrow">YOUR RESERVED PLACES</p>
+                        <h2>My registrations</h2>
+                        <p>Your event bookings and confirmation details in one place.</p>
+                    </div>
+                    <div id="myRegistrations" class="registration-list"></div>
+                </section>
+
+                <section class="page-view" id="managePage">
+                    <div class="page-intro">
+                        <p class="eyebrow">ORGANIZER WORKSPACE</p>
+                        <h2>Manage events</h2>
+                        <p>Add campus events and keep track of their capacity and registrations.</p>
+                    </div>
+
+                    <div class="manager-layout">
+                        <form id="eventForm" class="panel form-panel">
+                            <div class="panel-heading">
+                                <div>
+                                    <p class="eyebrow">EVENT DETAILS</p>
+                                    <h3 id="formHeading">Create an event</h3>
+                                </div>
+                                <span class="stat-icon purple">＋</span>
+                            </div>
+
+                            <input type="hidden" id="editEventId">
+
+                            <label for="eventName">Event name</label>
+                            <input id="eventName" required maxlength="80" placeholder="e.g. Design Thinking Workshop">
+
+                            <div class="form-row">
+                                <div>
+                                    <label for="eventCategory">Category</label>
+                                    <select id="eventCategory" required>
+                                        <option value="Cultural">Cultural</option>
+                                        <option value="Workshop">Workshop</option>
+                                        <option value="Technical">Technical</option>
+                                        <option value="Career">Career</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="eventCapacity">Seat limit</label>
+                                    <input id="eventCapacity" type="number" min="1" max="10000" required value="50">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div>
+                                    <label for="eventDate">Date</label>
+                                    <input id="eventDate" type="date" required>
+                                </div>
+                                <div>
+                                    <label for="eventTime">Time</label>
+                                    <input id="eventTime" type="time" required value="10:00">
+                                </div>
+                            </div>
+
+                            <label for="eventVenue">Venue</label>
+                            <input id="eventVenue" required maxlength="100" placeholder="Building or room">
+
+                            <label for="eventDescription">Description</label>
+                            <textarea id="eventDescription" required maxlength="350" rows="3" placeholder="What can students expect?"></textarea>
+
+                            <div class="form-actions">
+                                <button class="button button-lime" type="submit" id="saveEventButton">Create event</button>
+                                <button class="button button-quiet" type="button" id="cancelEditButton" hidden>Cancel edit</button>
+                            </div>
+                        </form>
+
+                        <div class="panel managed-panel">
+                            <div class="panel-heading">
+                                <div>
+                                    <p class="eyebrow">YOUR PROGRAMME</p>
+                                    <h3>Event inventory</h3>
+                                </div>
+                                <span class="count-badge" id="managedCount">0 events</span>
+                            </div>
+                            <div id="managedEvents" class="managed-list"></div>
+                        </div>
+                    </div>
+                    <p class="demo-note">Demo note: organizer controls are not password-protected in this frontend prototype.</p>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-backdrop" id="registrationModal" hidden>
+        <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <button class="modal-close" id="closeModal" type="button" aria-label="Close">×</button>
+            <p class="eyebrow">SAVE YOUR PLACE</p>
+            <h2 id="modalTitle">Event registration</h2>
+            <p class="modal-event-name" id="modalEventName"></p>
+            <form id="registrationForm">
+                <input type="hidden" id="registrationEventId">
+                <label for="studentName">Full name</label>
+                <input id="studentName" required maxlength="100" autocomplete="name" placeholder="Your full name">
+                <label for="studentEmail">Email address</label>
+                <input id="studentEmail" type="email" required autocomplete="email" placeholder="you@example.com">
+                <label for="studentRegNo">University registration number</label>
+                <input id="studentRegNo" required maxlength="50" placeholder="Your registration number">
+                <button class="button button-lime full-width" type="submit">Confirm registration →</button>
+            </form>
+        </section>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="script.js"></script>
+</body>
+</html>
